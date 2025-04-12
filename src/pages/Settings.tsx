@@ -1,453 +1,306 @@
-import React, { useState } from "react";
-import Layout from "../components/dashboard/Layout";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, Lock, Bell, Palette, Globe, Database, Shield, Users } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
+import { Bell, User, Shield, Lightbulb, Languages, Palette, Save } from "lucide-react";
 
 function Settings() {
-  const { toast } = useToast();
-  
-  const [generalSettings, setGeneralSettings] = useState({
-    displayDensity: "comfortable",
-    defaultView: "list",
-    language: "english",
-    dateFormat: "mm/dd/yyyy"
-  });
-  
-  const [notificationSettings, setNotificationSettings] = useState({
-    emailNotifications: true,
-    criticalAlerts: true,
-    taskAssignments: true,
-    systemUpdates: false,
-    dailySummary: true,
-    desktopNotifications: false
-  });
-  
-  const [appearanceSettings, setAppearanceSettings] = useState({
-    theme: "light",
-    colorScheme: "blue",
-    fontSize: "medium",
-    animationsEnabled: true
-  });
-  
-  const saveSettings = (settingType: string) => {
-    toast({
-      title: "Settings Saved",
-      description: `Your ${settingType} settings have been updated successfully.`,
-    });
-  };
-  
   return (
-    <Layout>
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold">Settings</h1>
-          <p className="text-muted-foreground">Manage your system settings and preferences</p>
-        </div>
-        
-        <Tabs defaultValue="general" className="space-y-4">
-          <TabsList className="w-full justify-start border-b pb-px">
-            <TabsTrigger value="general" className="gap-2">
-              <Globe className="h-4 w-4" />
-              General
-            </TabsTrigger>
-            <TabsTrigger value="account" className="gap-2">
-              <User className="h-4 w-4" />
-              Account
-            </TabsTrigger>
-            <TabsTrigger value="notifications" className="gap-2">
-              <Bell className="h-4 w-4" />
-              Notifications
-            </TabsTrigger>
-            <TabsTrigger value="appearance" className="gap-2">
-              <Palette className="h-4 w-4" />
-              Appearance
-            </TabsTrigger>
-            <TabsTrigger value="security" className="gap-2">
-              <Shield className="h-4 w-4" />
-              Security
-            </TabsTrigger>
-            <TabsTrigger value="team" className="gap-2">
-              <Users className="h-4 w-4" />
-              Team
-            </TabsTrigger>
-            <TabsTrigger value="data" className="gap-2">
-              <Database className="h-4 w-4" />
-              Data Management
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="general">
-            <Card>
-              <CardHeader>
-                <CardTitle>General Settings</CardTitle>
-                <CardDescription>Manage your general system preferences</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="displayDensity">Display Density</Label>
-                      <select
-                        id="displayDensity"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={generalSettings.displayDensity}
-                        onChange={(e) => setGeneralSettings({...generalSettings, displayDensity: e.target.value})}
-                      >
-                        <option value="comfortable">Comfortable</option>
-                        <option value="compact">Compact</option>
-                        <option value="spacious">Spacious</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="defaultView">Default View</Label>
-                      <select
-                        id="defaultView"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={generalSettings.defaultView}
-                        onChange={(e) => setGeneralSettings({...generalSettings, defaultView: e.target.value})}
-                      >
-                        <option value="list">List</option>
-                        <option value="grid">Grid</option>
-                        <option value="kanban">Kanban</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="language">Language</Label>
-                      <select
-                        id="language"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={generalSettings.language}
-                        onChange={(e) => setGeneralSettings({...generalSettings, language: e.target.value})}
-                      >
-                        <option value="english">English</option>
-                        <option value="spanish">Spanish</option>
-                        <option value="french">French</option>
-                        <option value="german">German</option>
-                        <option value="chinese">Chinese</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="dateFormat">Date Format</Label>
-                      <select
-                        id="dateFormat"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={generalSettings.dateFormat}
-                        onChange={(e) => setGeneralSettings({...generalSettings, dateFormat: e.target.value})}
-                      >
-                        <option value="mm/dd/yyyy">MM/DD/YYYY</option>
-                        <option value="dd/mm/yyyy">DD/MM/YYYY</option>
-                        <option value="yyyy-mm-dd">YYYY-MM-DD</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                
-                <Button onClick={() => saveSettings("general")}>Save Changes</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="account">
-            <Card>
-              <CardHeader>
-                <CardTitle>Account Settings</CardTitle>
-                <CardDescription>Manage your account details and preferences</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center">
-                    <User className="h-10 w-10 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium">John Doe</h3>
-                    <p className="text-sm text-muted-foreground">Administrator</p>
-                    <Button variant="outline" size="sm" className="mt-2">
-                      Change Avatar
-                    </Button>
-                  </div>
-                </div>
-                
-                <Separator />
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="fullName">Full Name</Label>
-                      <input
-                        id="fullName"
-                        type="text"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        defaultValue="John Doe"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="email">Email Address</Label>
-                      <input
-                        id="email"
-                        type="email"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        defaultValue="john.doe@mainsync.com"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="jobTitle">Job Title</Label>
-                      <input
-                        id="jobTitle"
-                        type="text"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        defaultValue="Maintenance Manager"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <input
-                        id="phone"
-                        type="tel"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        defaultValue="(555) 123-4567"
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-                <Button onClick={() => saveSettings("account")}>Save Changes</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="notifications">
-            <Card>
-              <CardHeader>
-                <CardTitle>Notification Settings</CardTitle>
-                <CardDescription>Manage how you receive notifications</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="emailNotifications" className="font-medium">Email Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Receive notifications via email</p>
-                    </div>
-                    <Switch
-                      id="emailNotifications"
-                      checked={notificationSettings.emailNotifications}
-                      onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, emailNotifications: checked})}
-                    />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="criticalAlerts" className="font-medium">Critical Alerts</Label>
-                      <p className="text-sm text-muted-foreground">Receive alerts for critical system issues</p>
-                    </div>
-                    <Switch
-                      id="criticalAlerts"
-                      checked={notificationSettings.criticalAlerts}
-                      onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, criticalAlerts: checked})}
-                    />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="taskAssignments" className="font-medium">Task Assignments</Label>
-                      <p className="text-sm text-muted-foreground">Get notified when tasks are assigned to you</p>
-                    </div>
-                    <Switch
-                      id="taskAssignments"
-                      checked={notificationSettings.taskAssignments}
-                      onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, taskAssignments: checked})}
-                    />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="systemUpdates" className="font-medium">System Updates</Label>
-                      <p className="text-sm text-muted-foreground">Receive notifications about system updates</p>
-                    </div>
-                    <Switch
-                      id="systemUpdates"
-                      checked={notificationSettings.systemUpdates}
-                      onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, systemUpdates: checked})}
-                    />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="dailySummary" className="font-medium">Daily Summary</Label>
-                      <p className="text-sm text-muted-foreground">Receive a daily summary of activities</p>
-                    </div>
-                    <Switch
-                      id="dailySummary"
-                      checked={notificationSettings.dailySummary}
-                      onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, dailySummary: checked})}
-                    />
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label htmlFor="desktopNotifications" className="font-medium">Desktop Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Show notifications on your desktop</p>
-                    </div>
-                    <Switch
-                      id="desktopNotifications"
-                      checked={notificationSettings.desktopNotifications}
-                      onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, desktopNotifications: checked})}
-                    />
-                  </div>
-                </div>
-                
-                <Button onClick={() => saveSettings("notification")}>Save Changes</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="appearance">
-            <Card>
-              <CardHeader>
-                <CardTitle>Appearance Settings</CardTitle>
-                <CardDescription>Customize how MainSync looks and feels</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="theme">Theme</Label>
-                      <select
-                        id="theme"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={appearanceSettings.theme}
-                        onChange={(e) => setAppearanceSettings({...appearanceSettings, theme: e.target.value})}
-                      >
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                        <option value="system">System Default</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="colorScheme">Color Scheme</Label>
-                      <select
-                        id="colorScheme"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={appearanceSettings.colorScheme}
-                        onChange={(e) => setAppearanceSettings({...appearanceSettings, colorScheme: e.target.value})}
-                      >
-                        <option value="blue">Blue</option>
-                        <option value="green">Green</option>
-                        <option value="purple">Purple</option>
-                        <option value="red">Red</option>
-                        <option value="orange">Orange</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="fontSize">Font Size</Label>
-                      <select
-                        id="fontSize"
-                        className="w-full h-10 px-3 py-2 mt-1 bg-background border border-input rounded-md"
-                        value={appearanceSettings.fontSize}
-                        onChange={(e) => setAppearanceSettings({...appearanceSettings, fontSize: e.target.value})}
-                      >
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                      </select>
-                    </div>
-                    
-                    <div className="flex items-center justify-between pt-2">
-                      <div>
-                        <Label htmlFor="animationsEnabled" className="font-medium">Enable Animations</Label>
-                        <p className="text-sm text-muted-foreground">Show animated transitions and effects</p>
-                      </div>
-                      <Switch
-                        id="animationsEnabled"
-                        checked={appearanceSettings.animationsEnabled}
-                        onCheckedChange={(checked) => setAppearanceSettings({...appearanceSettings, animationsEnabled: checked})}
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-                <Button onClick={() => saveSettings("appearance")}>Save Changes</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="security">
-            <Card>
-              <CardHeader>
-                <CardTitle>Security Settings</CardTitle>
-                <CardDescription>Manage your account security and access</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-4 p-8 justify-center">
-                  <Lock className="h-10 w-10 text-muted-foreground" />
-                  <p className="text-muted-foreground">Security settings content will be implemented in future updates.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="team">
-            <Card>
-              <CardHeader>
-                <CardTitle>Team Settings</CardTitle>
-                <CardDescription>Manage team access and permissions</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-4 p-8 justify-center">
-                  <Users className="h-10 w-10 text-muted-foreground" />
-                  <p className="text-muted-foreground">Team management settings will be implemented in future updates.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="data">
-            <Card>
-              <CardHeader>
-                <CardTitle>Data Management</CardTitle>
-                <CardDescription>Manage your data, backups and exports</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-4 p-8 justify-center">
-                  <Database className="h-10 w-10 text-muted-foreground" />
-                  <p className="text-muted-foreground">Data management features will be implemented in future updates.</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+    <div className="p-6 space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">Settings</h1>
+        <p className="text-muted-foreground">Manage your account and application preferences</p>
       </div>
-    </Layout>
+      
+      <Tabs defaultValue="profile">
+        <div className="flex gap-6">
+          <div className="hidden md:block w-[200px] flex-shrink-0">
+            <div className="space-y-1">
+              <TabsList className="flex flex-col items-start h-auto bg-transparent p-0">
+                <TabsTrigger
+                  value="profile"
+                  className="w-full justify-start px-2 data-[state=active]:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span>Profile</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="notifications"
+                  className="w-full justify-start px-2 data-[state=active]:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <Bell className="h-4 w-4" />
+                    <span>Notifications</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="appearance"
+                  className="w-full justify-start px-2 data-[state=active]:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <Palette className="h-4 w-4" />
+                    <span>Appearance</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="language"
+                  className="w-full justify-start px-2 data-[state=active]:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <Languages className="h-4 w-4" />
+                    <span>Language</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="security"
+                  className="w-full justify-start px-2 data-[state=active]:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    <span>Security</span>
+                  </div>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="advanced"
+                  className="w-full justify-start px-2 data-[state=active]:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <Lightbulb className="h-4 w-4" />
+                    <span>Advanced</span>
+                  </div>
+                </TabsTrigger>
+              </TabsList>
+            </div>
+          </div>
+          
+          <div className="flex-1">
+            <TabsList className="mb-4 md:hidden">
+              <TabsTrigger value="profile">Profile</TabsTrigger>
+              <TabsTrigger value="notifications">Notifications</TabsTrigger>
+              <TabsTrigger value="appearance">Appearance</TabsTrigger>
+              <TabsTrigger value="security">Security</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="profile" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Profile</CardTitle>
+                  <CardDescription>Manage your profile information</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                    <Avatar className="h-16 w-16">
+                      <AvatarFallback>JD</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-1">
+                      <h3 className="text-lg font-medium">John Doe</h3>
+                      <p className="text-sm text-muted-foreground">Facilities Manager</p>
+                    </div>
+                    <div className="md:ml-auto">
+                      <Button variant="outline">Change Photo</Button>
+                    </div>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Name</Label>
+                      <Input id="name" defaultValue="John Doe" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input id="email" defaultValue="john.doe@mainsync.com" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="title">Job Title</Label>
+                      <Input id="title" defaultValue="Facilities Manager" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input id="phone" defaultValue="(555) 123-4567" />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="bio">Bio</Label>
+                      <Input id="bio" defaultValue="Facilities manager with 10+ years of experience" />
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <Button className="gap-2">
+                    <Save className="h-4 w-4" />
+                    Save Changes
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="notifications" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Notifications</CardTitle>
+                  <CardDescription>Configure your notification preferences</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-medium">Email Notifications</h3>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="critical-email" className="text-sm">Critical Alerts</Label>
+                        <p className="text-xs text-muted-foreground">Receive notifications for critical system events</p>
+                      </div>
+                      <Switch id="critical-email" defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="task-email" className="text-sm">Task Assignments</Label>
+                        <p className="text-xs text-muted-foreground">Receive notifications when tasks are assigned to you</p>
+                      </div>
+                      <Switch id="task-email" defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="reports-email" className="text-sm">Report Generation</Label>
+                        <p className="text-xs text-muted-foreground">Receive notifications when reports are ready</p>
+                      </div>
+                      <Switch id="reports-email" defaultChecked />
+                    </div>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-medium">In-App Notifications</h3>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="maintenance-app" className="text-sm">Maintenance Alerts</Label>
+                        <p className="text-xs text-muted-foreground">Show notifications for maintenance events</p>
+                      </div>
+                      <Switch id="maintenance-app" defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="system-app" className="text-sm">System Updates</Label>
+                        <p className="text-xs text-muted-foreground">Show notifications for system updates</p>
+                      </div>
+                      <Switch id="system-app" defaultChecked />
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <Button className="gap-2">
+                    <Save className="h-4 w-4" />
+                    Save Preferences
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="appearance" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Appearance</CardTitle>
+                  <CardDescription>Customize the look and feel of the application</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-medium">Theme</h3>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="border rounded-md p-2 cursor-pointer bg-white">
+                        <div className="h-10 bg-white rounded-md border mb-2"></div>
+                        <div className="text-xs font-medium text-center">Light</div>
+                      </div>
+                      <div className="border rounded-md p-2 cursor-pointer bg-slate-950">
+                        <div className="h-10 bg-slate-900 rounded-md border border-slate-800 mb-2"></div>
+                        <div className="text-xs font-medium text-white text-center">Dark</div>
+                      </div>
+                      <div className="border rounded-md p-2 cursor-pointer bg-gradient-to-r from-white to-slate-950">
+                        <div className="h-10 bg-gradient-to-r from-white to-slate-900 rounded-md border mb-2"></div>
+                        <div className="text-xs font-medium text-center">System</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-medium">Layout</h3>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="compact-mode" className="text-sm">Compact Mode</Label>
+                        <p className="text-xs text-muted-foreground">Reduce the spacing and size of elements</p>
+                      </div>
+                      <Switch id="compact-mode" />
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <Button className="gap-2">
+                    <Save className="h-4 w-4" />
+                    Save Preferences
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="security" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Security</CardTitle>
+                  <CardDescription>Manage your security settings</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-medium">Password</h3>
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="current-password">Current Password</Label>
+                        <Input id="current-password" type="password" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="new-password">New Password</Label>
+                        <Input id="new-password" type="password" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="confirm-password">Confirm New Password</Label>
+                        <Input id="confirm-password" type="password" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-medium">Two-Factor Authentication</h3>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label htmlFor="two-factor" className="text-sm">Enable Two-Factor Authentication</Label>
+                        <p className="text-xs text-muted-foreground">Secure your account with two-factor authentication</p>
+                      </div>
+                      <Switch id="two-factor" />
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <Button className="gap-2">
+                    <Save className="h-4 w-4" />
+                    Save Changes
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+          </div>
+        </div>
+      </Tabs>
+    </div>
   );
 }
 

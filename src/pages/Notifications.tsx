@@ -1,6 +1,5 @@
 
 import React, { useState } from "react";
-import Layout from "../components/dashboard/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -117,122 +116,120 @@ function Notifications() {
   };
   
   return (
-    <Layout>
-      <div className="p-6 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold">Notifications</h1>
-            <p className="text-muted-foreground">View and manage your system notifications</p>
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" className="gap-2" onClick={markAllAsRead}>
-              <CheckCircle className="h-4 w-4" />
-              Mark All as Read
-            </Button>
-            
-            <Button variant="outline" className="gap-2" onClick={clearAllRead}>
-              <Trash2 className="h-4 w-4" />
-              Clear Read
-            </Button>
-            
-            <Button variant="outline" className="gap-2">
-              <Filter className="h-4 w-4" />
-              Filter
-            </Button>
-          </div>
+    <div className="p-6 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Notifications</h1>
+          <p className="text-muted-foreground">View and manage your system notifications</p>
         </div>
         
-        {/* Notification Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card>
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="bg-blue-100 text-blue-800 p-3 rounded-full">
-                <Bell className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Unread</p>
-                <p className="text-2xl font-bold">{unreadCount}</p>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" className="gap-2" onClick={markAllAsRead}>
+            <CheckCircle className="h-4 w-4" />
+            Mark All as Read
+          </Button>
           
-          <Card>
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="bg-red-100 text-red-800 p-3 rounded-full">
-                <AlertTriangle className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Critical</p>
-                <p className="text-2xl font-bold">{criticalCount}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <Button variant="outline" className="gap-2" onClick={clearAllRead}>
+            <Trash2 className="h-4 w-4" />
+            Clear Read
+          </Button>
           
-          <Card>
-            <CardContent className="p-4 flex items-center gap-4">
-              <div className="bg-yellow-100 text-yellow-800 p-3 rounded-full">
-                <Info className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Warnings</p>
-                <p className="text-2xl font-bold">{warningCount}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <Button variant="outline" className="gap-2">
+            <Filter className="h-4 w-4" />
+            Filter
+          </Button>
         </div>
-        
-        {/* Notifications List */}
+      </div>
+      
+      {/* Notification Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
-          <CardHeader>
-            <CardTitle>Notification Center</CardTitle>
-            <CardDescription>Stay updated with system notifications and alerts</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="all">
-              <TabsList className="mb-4">
-                <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="unread">Unread</TabsTrigger>
-                <TabsTrigger value="critical">Critical</TabsTrigger>
-                <TabsTrigger value="warnings">Warnings</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="all" className="space-y-4">
-                <NotificationsList 
-                  notifications={activeNotifications} 
-                  onMarkAsRead={markAsRead} 
-                  onDelete={deleteNotification} 
-                />
-              </TabsContent>
-              
-              <TabsContent value="unread" className="space-y-4">
-                <NotificationsList 
-                  notifications={activeNotifications.filter(n => !n.read)} 
-                  onMarkAsRead={markAsRead} 
-                  onDelete={deleteNotification} 
-                />
-              </TabsContent>
-              
-              <TabsContent value="critical" className="space-y-4">
-                <NotificationsList 
-                  notifications={activeNotifications.filter(n => n.type === "critical")} 
-                  onMarkAsRead={markAsRead} 
-                  onDelete={deleteNotification} 
-                />
-              </TabsContent>
-              
-              <TabsContent value="warnings" className="space-y-4">
-                <NotificationsList 
-                  notifications={activeNotifications.filter(n => n.type === "warning")} 
-                  onMarkAsRead={markAsRead} 
-                  onDelete={deleteNotification} 
-                />
-              </TabsContent>
-            </Tabs>
+          <CardContent className="p-4 flex items-center gap-4">
+            <div className="bg-blue-100 text-blue-800 p-3 rounded-full">
+              <Bell className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Unread</p>
+              <p className="text-2xl font-bold">{unreadCount}</p>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-4 flex items-center gap-4">
+            <div className="bg-red-100 text-red-800 p-3 rounded-full">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Critical</p>
+              <p className="text-2xl font-bold">{criticalCount}</p>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-4 flex items-center gap-4">
+            <div className="bg-yellow-100 text-yellow-800 p-3 rounded-full">
+              <Info className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Warnings</p>
+              <p className="text-2xl font-bold">{warningCount}</p>
+            </div>
           </CardContent>
         </Card>
       </div>
-    </Layout>
+      
+      {/* Notifications List */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Notification Center</CardTitle>
+          <CardDescription>Stay updated with system notifications and alerts</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="all">
+            <TabsList className="mb-4">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="unread">Unread</TabsTrigger>
+              <TabsTrigger value="critical">Critical</TabsTrigger>
+              <TabsTrigger value="warnings">Warnings</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="all" className="space-y-4">
+              <NotificationsList 
+                notifications={activeNotifications} 
+                onMarkAsRead={markAsRead} 
+                onDelete={deleteNotification} 
+              />
+            </TabsContent>
+            
+            <TabsContent value="unread" className="space-y-4">
+              <NotificationsList 
+                notifications={activeNotifications.filter(n => !n.read)} 
+                onMarkAsRead={markAsRead} 
+                onDelete={deleteNotification} 
+              />
+            </TabsContent>
+            
+            <TabsContent value="critical" className="space-y-4">
+              <NotificationsList 
+                notifications={activeNotifications.filter(n => n.type === "critical")} 
+                onMarkAsRead={markAsRead} 
+                onDelete={deleteNotification} 
+              />
+            </TabsContent>
+            
+            <TabsContent value="warnings" className="space-y-4">
+              <NotificationsList 
+                notifications={activeNotifications.filter(n => n.type === "warning")} 
+                onMarkAsRead={markAsRead} 
+                onDelete={deleteNotification} 
+              />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

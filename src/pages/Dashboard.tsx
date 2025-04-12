@@ -1,11 +1,10 @@
-
-import { 
-  BarChart2, 
-  Building2, 
-  CheckCircle, 
-  ClipboardCheck, 
-  Clock, 
-  Users 
+import {
+  BarChart2,
+  Building2,
+  CheckCircle,
+  ClipboardCheck,
+  Clock,
+  Users,
 } from "lucide-react";
 import Header from "@/components/dashboard/Header";
 import StatCard from "@/components/dashboard/StatCard";
@@ -17,9 +16,11 @@ import TaskAssignment from "@/components/dashboard/TaskAssignment";
 
 const Dashboard = () => {
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="h-screen flex flex-col">
+      {/* Fixed header */}
       <Header title="Dashboard" />
-      
+
+      {/* Scrollable content area */}
       <div className="flex-1 p-6 space-y-6 overflow-y-auto">
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -51,16 +52,16 @@ const Dashboard = () => {
             trend={{ value: 5, isPositive: false }}
           />
         </div>
-        
+
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <BarChartWidget />
           <PieChartWidget />
         </div>
-        
+
         {/* Task Assignment Section */}
         <TaskAssignment />
-        
+
         {/* Info Panels Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TasksWidget />

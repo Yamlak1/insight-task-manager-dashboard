@@ -1,14 +1,13 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  DragDropContext, 
-  Droppable, 
-  Draggable, 
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
   DropResult,
   DroppableProvided,
-  DraggableProvided
+  DraggableProvided,
 } from "@hello-pangea/dnd";
 import { Button } from "@/components/ui/button";
 import { Plus, User, Users } from "lucide-react";
@@ -36,27 +35,27 @@ interface BoardData {
 
 const initialData: BoardData = {
   columns: {
-    "unassigned": {
+    unassigned: {
       id: "unassigned",
       title: "Unassigned",
       tasks: [
-        { 
-          id: "task-1", 
-          content: "HVAC System Inspection", 
+        {
+          id: "task-1",
+          content: "HVAC System Inspection",
           priority: "high",
-          location: "Building A, Floor 2"
+          location: "Building A, Floor 2",
         },
-        { 
-          id: "task-2", 
-          content: "Elevator Maintenance", 
+        {
+          id: "task-2",
+          content: "Elevator Maintenance",
           priority: "medium",
-          location: "Building B, Floor 1-5"
+          location: "Building B, Floor 1-5",
         },
-        { 
-          id: "task-3", 
-          content: "Plumbing Repair", 
+        {
+          id: "task-3",
+          content: "Plumbing Repair",
           priority: "critical",
-          location: "Building C, Room 304"
+          location: "Building C, Room 304",
         },
       ],
     },
@@ -64,11 +63,11 @@ const initialData: BoardData = {
       id: "team-a",
       title: "Team Alpha",
       tasks: [
-        { 
-          id: "task-4", 
-          content: "Fire System Testing", 
+        {
+          id: "task-4",
+          content: "Fire System Testing",
           priority: "high",
-          location: "Building A, All Floors"
+          location: "Building A, All Floors",
         },
       ],
     },
@@ -76,11 +75,11 @@ const initialData: BoardData = {
       id: "team-b",
       title: "Team Beta",
       tasks: [
-        { 
-          id: "task-5", 
-          content: "Lighting Replacement", 
+        {
+          id: "task-5",
+          content: "Lighting Replacement",
           priority: "low",
-          location: "Building D, Floor 1"
+          location: "Building D, Floor 1",
         },
       ],
     },
@@ -138,7 +137,7 @@ const TaskAssignment = () => {
           [newColumn.id]: newColumn,
         },
       });
-      
+
       toast({
         title: "Task reordered",
         description: `Task "${movedTask.content}" reordered within ${sourceColumn.title}`,
@@ -170,7 +169,7 @@ const TaskAssignment = () => {
         [newDestColumn.id]: newDestColumn,
       },
     });
-    
+
     toast({
       title: "Task assigned",
       description: `Task "${movedTask.content}" moved from ${sourceColumn.title} to ${destColumn.title}`,
@@ -198,15 +197,13 @@ const TaskAssignment = () => {
                   <div className="mb-2 flex items-center gap-2">
                     <h3 className="font-medium flex items-center">
                       {column.id === "unassigned" ? (
-                        <User className="mr-2 h-4 w-4 text-muted-foreground" />
+                        <User className="mr-2 h-6 w-6 text-muted-foreground" />
                       ) : (
-                        <Users className="mr-2 h-4 w-4 text-primary" />
+                        <Users className="mr-2 h-6 w-6 text-primary" />
                       )}
                       {column.title}
                     </h3>
-                    <Badge variant="outline">
-                      {tasks.length}
-                    </Badge>
+                    <Badge variant="outline">{tasks.length}</Badge>
                   </div>
                   <Droppable droppableId={column.id}>
                     {(provided: DroppableProvided) => (
@@ -214,11 +211,13 @@ const TaskAssignment = () => {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         className={`p-2 min-h-[200px] bg-muted/30 rounded-md border border-dashed flex-1 ${
-                          tasks.length === 0 ? "flex items-center justify-center" : ""
+                          tasks.length === 0
+                            ? "flex items-center justify-center"
+                            : ""
                         }`}
                       >
                         {tasks.length === 0 && (
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-md text-muted-foreground">
                             Drop tasks here
                           </div>
                         )}
@@ -235,15 +234,20 @@ const TaskAssignment = () => {
                                 {...provided.dragHandleProps}
                                 className="p-3 mb-2 bg-card rounded-md shadow-sm border cursor-grab active:cursor-grabbing"
                               >
-                                <div className="font-medium mb-1">{task.content}</div>
+                                <div className="font-medium mb-1 text-xl">
+                                  {task.content}
+                                </div>
                                 <div className="flex flex-col gap-1">
-                                  <Badge 
+                                  <Badge
                                     variant="outline"
-                                    className={`w-fit text-xs ${getPriorityColor(task.priority)}`}
+                                    className={`w-fit  text-sm ${getPriorityColor(
+                                      task.priority
+                                    )}`}
                                   >
-                                    {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                                    {task.priority.charAt(0).toUpperCase() +
+                                      task.priority.slice(1)}
                                   </Badge>
-                                  <div className="text-xs text-muted-foreground">
+                                  <div className="text-sm text-muted-foreground">
                                     {task.location}
                                   </div>
                                 </div>

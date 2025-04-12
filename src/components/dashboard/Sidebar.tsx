@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -56,14 +57,15 @@ interface SidebarProps {
 
 const Sidebar = ({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [activePage, setActivePage] = useState("dashboard");
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
   
-  const handleNavigation = (page: string) => {
-    setActivePage(page);
+  const handleNavigation = (path: string) => {
+    navigate(path);
     toast({
       title: "Navigation",
-      description: `Navigated to ${page.charAt(0).toUpperCase() + page.slice(1)}`,
+      description: `Navigated to ${path.charAt(1).toUpperCase() + path.slice(2)}`,
     });
   };
 
@@ -101,40 +103,40 @@ const Sidebar = ({ className }: SidebarProps) => {
         <SidebarItem 
           icon={LayoutDashboard} 
           label="Dashboard" 
-          active={activePage === "dashboard"}
-          onClick={() => handleNavigation("dashboard")} 
+          active={location.pathname === "/"}
+          onClick={() => handleNavigation("/")} 
         />
         <SidebarItem 
           icon={ClipboardList} 
           label="Tasks" 
           badge={12}
-          active={activePage === "tasks"}
-          onClick={() => handleNavigation("tasks")} 
+          active={location.pathname === "/tasks"}
+          onClick={() => handleNavigation("/tasks")} 
         />
         <SidebarItem 
           icon={Building2} 
           label="Facilities" 
-          active={activePage === "facilities"}
-          onClick={() => handleNavigation("facilities")} 
+          active={location.pathname === "/facilities"}
+          onClick={() => handleNavigation("/facilities")} 
         />
         <SidebarItem 
           icon={Users} 
           label="Teams" 
-          active={activePage === "teams"}
-          onClick={() => handleNavigation("teams")} 
+          active={location.pathname === "/teams"}
+          onClick={() => handleNavigation("/teams")} 
         />
         <SidebarItem 
           icon={Bell} 
           label="Notifications" 
           badge={5}
-          active={activePage === "notifications"}
-          onClick={() => handleNavigation("notifications")} 
+          active={location.pathname === "/notifications"}
+          onClick={() => handleNavigation("/notifications")} 
         />
         <SidebarItem 
           icon={BarChart2} 
           label="Reports" 
-          active={activePage === "reports"}
-          onClick={() => handleNavigation("reports")} 
+          active={location.pathname === "/reports"}
+          onClick={() => handleNavigation("/reports")} 
         />
       </nav>
 
@@ -144,8 +146,8 @@ const Sidebar = ({ className }: SidebarProps) => {
         <SidebarItem 
           icon={Settings} 
           label="Settings" 
-          active={activePage === "settings"}
-          onClick={() => handleNavigation("settings")} 
+          active={location.pathname === "/settings"}
+          onClick={() => handleNavigation("/settings")} 
         />
       </div>
     </div>
